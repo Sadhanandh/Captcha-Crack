@@ -2,9 +2,14 @@ Dependency
 ==
 
 PIL
+
 pytesser
 
+
+pytesser needs tesseract engine
+
 on Ubuntu u can install tesseract engine
+
 (sudo) apt-get install tesseract-ocr﻿
 
 and 
@@ -12,8 +17,12 @@ and
 (sudo) pip install pytesser
 
 PyTesser:
+
 http://code.google.com/p/pytesser/
+
+
 Tesseract:
+
 http://code.google.com/p/tesseract-ocr/
 
 About
