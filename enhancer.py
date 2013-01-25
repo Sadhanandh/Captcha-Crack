@@ -8,8 +8,20 @@ if len(sys.argv)>1:
 	inp = sys.argv[1]
 else :
 	inp = 'test.gif'
+
+
+if len(sys.argv)>2:
+	txt = sys.argv[2]
+else :
+	txt = 'none'
+
+if len(sys.argv)>3:
+	cn = sys.argv[3]
+else :
+	cn = ""
+
 #im = Image.open('%d.gif'%(val))
-im = Image.open(inp)
+im = Image.open("input"+cn+"/"+inp)
 im = im.convert("RGB")
 start =6
 en = im.size[0]-1
@@ -27,17 +39,26 @@ for i in range(en-start):
 
 
 img1 = img1.convert('1')
-
-if not os.path.exists('output'):
-	os.makedirs('output')
-img1.save(os.path.join('output',inp))
-if not os.path.exists('text_output'):
-	os.makedirs('text_output')
-dat = open(os.path.join('text_output',inp[:inp.rfind('.')]+'.txt'),"w")
+filn = "Score.txt"
+if not os.path.exists('output'+cn):
+	os.makedirs('output'+cn)
+img1.save(os.path.join('output'+cn,inp))
+if not os.path.exists('text_output'+cn):
+	os.makedirs('text_output'+cn)
+dat = open(os.path.join('text_output'+cn,inp[:inp.rfind('.')]+'.txt'),"w")
+filler = open(os.path.join(".",filn),"a")
 
 
 from pytesser import pytesser
-text = pytesser.image_file_to_string(os.path.join('output',inp))
+text = pytesser.image_file_to_string(os.path.join('output'+cn,inp))
 print text.strip('\n')
-dat.write(text.strip('\n'))
+dat.write("Guessed "+text.strip('\n')+'\n')
+dat.write("Actual "+txt)
+if txt==text.strip('\n'):
+	dat.write("Success!")
+	filler.write("1"+"\n")
+else:
+	dat.write("Failed!")
+	filler.write("0"+"\n")
 dat.close()
+filler.close()
